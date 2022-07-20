@@ -21,16 +21,15 @@ class SapGui(object):
         except:
             #se não estiver aberto, abrirá via .exe
                 self.path = config.SAP_EXE
-                varteste = subprocess.Popen(self.path)
-                time.sleep(5)               
+                subprocess.Popen(self.path)
+                time.sleep(5)    
+                            
         finally:
             SapGuiAuto = win32com.client.GetObject("SAPGUI")
         application = SapGuiAuto.GetScriptingEngine
         #faz conexão com a connection do SAP_CONNECT
         self.connection = application.OpenConnection(config.SAP_CONNECT, True)
-        time.sleep(3)
-        session = self.connection.Children(0)
-        
+        session = self.connection.Children(0)    
         session.findById("wnd[0]/usr/txtRSYST-BNAME").text = config.SAP_USER
         session.findById("wnd[0]/usr/pwdRSYST-BCODE").text = config.SAP_PASS
         session.findById("wnd[0]").sendVKey(0)
